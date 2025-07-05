@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_section_examples",
+  "info": {
+    "displayName": "example"
+  },
+  "options": {},
+  "attributes": {
+    "test": {
+      "type": "string"
+    }
+  }
+}

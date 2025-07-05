@@ -1,0 +1,8 @@
+fragment Page on Page {
+  title
+  url
+  sections {
+    __typename
+    ...ComponentSectionExample
+  }
+}

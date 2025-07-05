@@ -1,0 +1,5 @@
+fragment ComponentSectionExample on ComponentSectionExample { 
+  __typename 
+  id
+  test 
+}

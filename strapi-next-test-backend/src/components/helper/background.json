@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_helper_backgrounds",
+  "info": {
+    "displayName": "background",
+    "icon": "doctor"
+  },
+  "options": {},
+  "attributes": {
+    "color": {
+      "type": "enumeration",
+      "enum": [
+        "blue",
+        "red",
+        "yellow"
+      ],
+      "default": "blue",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_text_blocks_key_figures",
+  "info": {
+    "displayName": "keyFigure",
+    "icon": "cube",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "number": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

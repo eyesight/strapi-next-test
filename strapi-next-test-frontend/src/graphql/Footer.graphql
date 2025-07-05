@@ -1,0 +1,6 @@
+fragment Footer on Footer {
+    footerText
+    createdAt
+    updatedAt
+    publishedAt
+}

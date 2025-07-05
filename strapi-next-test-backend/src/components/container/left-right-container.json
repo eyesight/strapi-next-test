@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_container_left_right_containers",
+  "info": {
+    "displayName": "left-Right-Container",
+    "icon": "arrowLeft",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "leftColumnBg": {
+      "type": "component",
+      "repeatable": false,
+      "component": "helper.background"
+    },
+    "leftColumnKeyfigure": {
+      "type": "component",
+      "repeatable": false,
+      "component": "text-blocks.key-figure"
+    },
+    "leftColumnText": {
+      "type": "component",
+      "repeatable": false,
+      "component": "text-blocks.text-image"
+    },
+    "rightColumnBg": {
+      "type": "component",
+      "repeatable": false,
+      "component": "helper.background"
+    },
+    "rightColumnKeyfigure": {
+      "type": "component",
+      "repeatable": false,
+      "component": "text-blocks.key-figure"
+    },
+    "rightColumnText": {
+      "type": "component",
+      "repeatable": false,
+      "component": "text-blocks.text-image"
+    }
+  }
+}

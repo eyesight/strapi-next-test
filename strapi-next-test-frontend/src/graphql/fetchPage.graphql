@@ -1,0 +1,10 @@
+query FetchPage($url: String!, $publicationState: PublicationState) {
+  pages(publicationState: $publicationState, filters: { url: { eq: $url } }) {
+    data {
+      id
+      attributes {
+        ...Page
+      }
+    }
+  }
+}
