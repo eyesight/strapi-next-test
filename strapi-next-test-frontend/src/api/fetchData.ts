@@ -5,25 +5,29 @@ import {
   FetchPageQuery,
   FetchPageQueryVariables,
   FetchPageDocument,
-  PublicationState,
+  PublicationStatus,
+  FetchHeaderQuery,
+  FetchHeaderQueryVariables,
+  FetchHeaderDocument
 } from '@/graphql/generated'
 
-export const fetchPage = async(url: string) => {
+export const fetchPage = async (url: string) => {
   try {
     const result = await gqlClient.query<FetchPageQuery, FetchPageQueryVariables>({
       query: FetchPageDocument,
       variables: {
         url: url,
-        publicationState: PublicationState.Live
+        status: PublicationStatus.Published
       },
       fetchPolicy: 'network-only',
     })
-    if (!result.data.pages?.data) {
-      console.log(result)
-      throw new Error('Failed to fetch footer.')
+
+    const page = result.data.pages?.[0]
+    if (!page) {
+      throw new Error('No page found.')
     }
 
-    return result.data.pages?.data[0]
+    return page
   } catch (error) {
     console.log(JSON.stringify(error))
     return null
@@ -36,12 +40,30 @@ export const fetchFooter = async () => {
       query: FetchFooterDocument,
       fetchPolicy: 'network-only',
     })
-    if (!result.data.footer?.data) {
-      console.log(result)
+    if (!result.data.footer) {
+      console.log('footer',result) 
       throw new Error('Failed to fetch footer.')
     }
 
-    return result.data.footer?.data
+    return result.data.footer
+  } catch (error) {
+    console.log(JSON.stringify(error))
+    return null
+  }
+}
+
+export const fetchHeader = async () => {
+  try {
+    const result = await gqlClient.query<FetchHeaderQuery, FetchHeaderQueryVariables>({
+      query: FetchHeaderDocument,
+      fetchPolicy: 'network-only',
+    })
+    if (!result.data.header) {
+      console.log('header', result)
+      throw new Error('Failed to fetch footer.')
+    }
+
+    return result.data.header
   } catch (error) {
     console.log(JSON.stringify(error))
     return null

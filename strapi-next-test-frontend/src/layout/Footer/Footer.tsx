@@ -1,14 +1,14 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import { FooterFragment } from '@/graphql/generated';
+import styles from "./footer.module.scss";
 
 type FooterProps = {
     footer: FooterFragment
 }
 
-const Footer: FC<FooterProps> = ({footer}) => {
-    console.log(footer.footerText);
+const Footer: FC<FooterProps> = ({ footer }) => {
     return (
-        <>{footer.footerText}</>
+        <footer className={`${styles.footer}`}>{footer.footerText}</footer>
     )
 }
 

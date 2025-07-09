@@ -1,0 +1,5 @@
+query FetchHeader {
+  header {
+    ...Header
+  }
+}

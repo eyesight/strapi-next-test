@@ -1,0 +1,6 @@
+fragment Header on Header {
+  headerText
+  createdAt
+  updatedAt
+  publishedAt
+}

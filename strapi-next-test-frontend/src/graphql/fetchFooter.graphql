@@ -1,10 +1,5 @@
 query FetchFooter {
   footer {
-    data {
-      id
-      attributes {
-        ...Footer
-      }
-    }
+    ...Footer
   }
 }

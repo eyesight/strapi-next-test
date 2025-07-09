@@ -1,8 +1,15 @@
 fragment Page on Page {
+  documentId
   title
   url
   sections {
     __typename
-    ...ComponentSectionExample
+    ... on ComponentSectionExample {
+      ...ComponentSectionExample
+    }
+    ... on Error {
+      code
+      message
+    }
   }
 }
