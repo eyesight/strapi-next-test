@@ -2,6 +2,21 @@ fragment Page on Page {
   documentId
   title
   url
+  Template
+  blocks {
+    __typename
+    ... on ComponentHelperBackground {
+      id
+      color
+    }
+    ... on ComponentSectionExample {
+      ...ComponentSectionExample
+    }
+    ... on Error {
+      code
+      message
+    }
+  }
   sections {
     __typename
     ... on ComponentSectionExample {

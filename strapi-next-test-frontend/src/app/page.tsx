@@ -2,32 +2,35 @@ import { fetchFooter, fetchPage, fetchHeader } from '@/api/fetchData';
 import Footer from '@/layout/Footer/Footer';
 import Header from '@/layout/Header/header';
 import PageWrapper from '@/layout/PageWrapper';
+import BodyWrapper from '@/_components/BodyWrapper';
 import React from 'react';
+import styles from './page.module.scss'; 
 
-// `app/page.tsx` is the UI for the `/` URL
 export default async function Page() {
-  const footer = await fetchFooter();
-  const page = await fetchPage('/');
-  const header = await fetchHeader();
+  const [footer, page, header] = await Promise.all([
+    fetchFooter(),
+    fetchPage('/'),
+    fetchHeader()
+  ]);
 
-  if (!footer) {
-    return (<p>There was an error loading the page.</p>)
+  if (!footer || !header || !page) {
+    return (<p>There was an error loading the page.</p>);
   }
 
-  if (!header) {
-    return (<p>There was an error loading the page.</p>)
-  }
+  const templateClass = page.Template === 'Typ_Y'
+    ? styles.typ_y
+    : page.Template === 'Typ_X'
+    ? styles.typ_x
+    : '';
 
-  if(!page) {
-    return (<p>There was an error loading the page.</p>)
-  }
-
-  return ( 
-    <>
+  return (
+    <BodyWrapper template={page.Template}>
       <Header header={header} />
-      <p>Hallo from page</p>
-      <main><PageWrapper url={'/'} page={page} /></main>
-      <Footer footer={footer} /> 
-    </>
-  )
+      <main className={templateClass}>
+        <p>Hallo from page</p>
+        <PageWrapper url={'/'} page={page} />
+      </main>
+      <Footer footer={footer} />
+    </BodyWrapper>
+  );
 }

@@ -17,7 +17,10 @@ export type Scalars = {
   Float: { input: number; output: number; }
   DateTime: { input: any; output: any; }
   JSON: { input: any; output: any; }
+  PageBlocksDynamicZoneInput: { input: any; output: any; }
   PageSectionsDynamicZoneInput: { input: any; output: any; }
+  PageXBlocksDynamicZoneInput: { input: any; output: any; }
+  PageYBlocksDynamicZoneInput: { input: any; output: any; }
 };
 
 export type BooleanFilterInput = {
@@ -119,6 +122,11 @@ export enum Enum_Componenthelperbackground_Color {
   Yellow = 'yellow'
 }
 
+export enum Enum_Page_Template {
+  TypX = 'Typ_X',
+  TypY = 'Typ_Y'
+}
+
 export type Error = {
   __typename?: 'Error';
   code: Scalars['String']['output'];
@@ -170,7 +178,7 @@ export type FooterInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type GenericMorph = ComponentContainerLeftRightContainer | ComponentHelperBackground | ComponentSectionExample | ComponentTextBlocksKeyFigure | ComponentTextBlocksTextImage | Footer | Header | I18NLocale | Page | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = ComponentContainerLeftRightContainer | ComponentHelperBackground | ComponentSectionExample | ComponentTextBlocksKeyFigure | ComponentTextBlocksTextImage | Footer | Header | I18NLocale | Page | PageX | PageY | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   __typename?: 'Header';
@@ -294,6 +302,8 @@ export type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createPage?: Maybe<Page>;
+  createPageX?: Maybe<PageX>;
+  createPageY?: Maybe<PageY>;
   createReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   createReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
   /** Create a new role */
@@ -303,6 +313,8 @@ export type Mutation = {
   deleteFooter?: Maybe<DeleteMutationResponse>;
   deleteHeader?: Maybe<DeleteMutationResponse>;
   deletePage?: Maybe<DeleteMutationResponse>;
+  deletePageX?: Maybe<DeleteMutationResponse>;
+  deletePageY?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflow?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflowStage?: Maybe<DeleteMutationResponse>;
   deleteUploadFile?: Maybe<UploadFile>;
@@ -322,6 +334,8 @@ export type Mutation = {
   updateFooter?: Maybe<Footer>;
   updateHeader?: Maybe<Header>;
   updatePage?: Maybe<Page>;
+  updatePageX?: Maybe<PageX>;
+  updatePageY?: Maybe<PageY>;
   updateReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   updateReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
   updateUploadFile: UploadFile;
@@ -341,6 +355,18 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreatePageArgs = {
   data: PageInput;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationCreatePageXArgs = {
+  data: PageXInput;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationCreatePageYArgs = {
+  data: PageYInput;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -368,6 +394,16 @@ export type MutationCreateUsersPermissionsUserArgs = {
 
 
 export type MutationDeletePageArgs = {
+  documentId: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePageXArgs = {
+  documentId: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePageYArgs = {
   documentId: Scalars['ID']['input'];
 };
 
@@ -443,6 +479,20 @@ export type MutationUpdatePageArgs = {
 };
 
 
+export type MutationUpdatePageXArgs = {
+  data: PageXInput;
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationUpdatePageYArgs = {
+  data: PageYInput;
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
 export type MutationUpdateReviewWorkflowsWorkflowArgs = {
   data: ReviewWorkflowsWorkflowInput;
   documentId: Scalars['ID']['input'];
@@ -476,6 +526,8 @@ export type MutationUpdateUsersPermissionsUserArgs = {
 
 export type Page = {
   __typename?: 'Page';
+  Template: Enum_Page_Template;
+  blocks?: Maybe<Array<Maybe<PageBlocksDynamicZone>>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -485,6 +537,8 @@ export type Page = {
   url: Scalars['String']['output'];
 };
 
+export type PageBlocksDynamicZone = ComponentHelperBackground | ComponentSectionExample | Error;
+
 export type PageEntityResponseCollection = {
   __typename?: 'PageEntityResponseCollection';
   nodes: Array<Page>;
@@ -492,6 +546,7 @@ export type PageEntityResponseCollection = {
 };
 
 export type PageFiltersInput = {
+  Template?: InputMaybe<StringFilterInput>;
   and?: InputMaybe<Array<InputMaybe<PageFiltersInput>>>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   documentId?: InputMaybe<IdFilterInput>;
@@ -504,6 +559,8 @@ export type PageFiltersInput = {
 };
 
 export type PageInput = {
+  Template?: InputMaybe<Enum_Page_Template>;
+  blocks?: InputMaybe<Array<Scalars['PageBlocksDynamicZoneInput']['input']>>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   sections?: InputMaybe<Array<Scalars['PageSectionsDynamicZoneInput']['input']>>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -511,6 +568,76 @@ export type PageInput = {
 };
 
 export type PageSectionsDynamicZone = ComponentSectionExample | Error;
+
+export type PageX = {
+  __typename?: 'PageX';
+  Header?: Maybe<Scalars['String']['output']>;
+  blocks?: Maybe<Array<Maybe<PageXBlocksDynamicZone>>>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  documentId: Scalars['ID']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PageXBlocksDynamicZone = ComponentSectionExample | ComponentTextBlocksKeyFigure | ComponentTextBlocksTextImage | Error;
+
+export type PageXEntityResponseCollection = {
+  __typename?: 'PageXEntityResponseCollection';
+  nodes: Array<PageX>;
+  pageInfo: Pagination;
+};
+
+export type PageXFiltersInput = {
+  Header?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<PageXFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  documentId?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<PageXFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PageXFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type PageXInput = {
+  Header?: InputMaybe<Scalars['String']['input']>;
+  blocks?: InputMaybe<Array<Scalars['PageXBlocksDynamicZoneInput']['input']>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type PageY = {
+  __typename?: 'PageY';
+  blocks?: Maybe<Array<Maybe<PageYBlocksDynamicZone>>>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  documentId: Scalars['ID']['output'];
+  header?: Maybe<Scalars['String']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PageYBlocksDynamicZone = ComponentContainerLeftRightContainer | ComponentSectionExample | Error;
+
+export type PageYEntityResponseCollection = {
+  __typename?: 'PageYEntityResponseCollection';
+  nodes: Array<PageY>;
+  pageInfo: Pagination;
+};
+
+export type PageYFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PageYFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  documentId?: InputMaybe<IdFilterInput>;
+  header?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PageYFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PageYFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type PageYInput = {
+  blocks?: InputMaybe<Array<Scalars['PageYBlocksDynamicZoneInput']['input']>>;
+  header?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
 
 export type Pagination = {
   __typename?: 'Pagination';
@@ -541,6 +668,12 @@ export type Query = {
   i18NLocales_connection?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
   page?: Maybe<Page>;
+  pageIes: Array<Maybe<PageY>>;
+  pageIes_connection?: Maybe<PageYEntityResponseCollection>;
+  pageX?: Maybe<PageX>;
+  pageXes: Array<Maybe<PageX>>;
+  pageXes_connection?: Maybe<PageXEntityResponseCollection>;
+  pageY?: Maybe<PageY>;
   pages: Array<Maybe<Page>>;
   pages_connection?: Maybe<PageEntityResponseCollection>;
   reviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
@@ -594,6 +727,50 @@ export type QueryI18NLocales_ConnectionArgs = {
 
 
 export type QueryPageArgs = {
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageIesArgs = {
+  filters?: InputMaybe<PageYFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageIes_ConnectionArgs = {
+  filters?: InputMaybe<PageYFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageXArgs = {
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageXesArgs = {
+  filters?: InputMaybe<PageXFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageXes_ConnectionArgs = {
+  filters?: InputMaybe<PageXFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageYArgs = {
   documentId: Scalars['ID']['input'];
   status?: InputMaybe<PublicationStatus>;
 };
@@ -1119,7 +1296,7 @@ export type FooterFragment = { __typename?: 'Footer', footerText?: string | null
 
 export type HeaderFragment = { __typename?: 'Header', headerText?: string | null, createdAt?: any | null, updatedAt?: any | null, publishedAt?: any | null };
 
-export type PageFragment = { __typename?: 'Page', documentId: string, title?: string | null, url: string, sections?: Array<{ __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null };
+export type PageFragment = { __typename?: 'Page', documentId: string, title?: string | null, url: string, Template: Enum_Page_Template, blocks?: Array<{ __typename: 'ComponentHelperBackground', id: string, color: Enum_Componenthelperbackground_Color } | { __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null, sections?: Array<{ __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null };
 
 export type FetchFooterQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1137,7 +1314,7 @@ export type FetchPageQueryVariables = Exact<{
 }>;
 
 
-export type FetchPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title?: string | null, url: string, sections?: Array<{ __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null } | null> };
+export type FetchPageQuery = { __typename?: 'Query', pages: Array<{ __typename?: 'Page', documentId: string, title?: string | null, url: string, Template: Enum_Page_Template, blocks?: Array<{ __typename: 'ComponentHelperBackground', id: string, color: Enum_Componenthelperbackground_Color } | { __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null, sections?: Array<{ __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null } | null> };
 
 export const FooterFragmentDoc = gql`
     fragment Footer on Footer {
@@ -1167,6 +1344,21 @@ export const PageFragmentDoc = gql`
   documentId
   title
   url
+  Template
+  blocks {
+    __typename
+    ... on ComponentHelperBackground {
+      id
+      color
+    }
+    ... on ComponentSectionExample {
+      ...ComponentSectionExample
+    }
+    ... on Error {
+      code
+      message
+    }
+  }
   sections {
     __typename
     ... on ComponentSectionExample {

@@ -28,7 +28,8 @@
         }
       },
       "components": [
-        "section.example"
+        "section.example",
+        "text-blocks.text-image"
       ]
     },
     "url": {
