@@ -17,14 +17,50 @@
     },
     "sections": {
       "type": "dynamiczone",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "Template"
+            },
+            "Typ Y"
+          ]
+        }
+      },
       "components": [
         "section.example"
       ]
     },
     "url": {
       "type": "string",
-      "unique": true,
-      "required": true
+      "required": true,
+      "unique": true
+    },
+    "Template": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Typ X",
+      "enum": [
+        "Typ X",
+        "Typ Y"
+      ]
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "Template"
+            },
+            "Typ X"
+          ]
+        }
+      },
+      "components": [
+        "section.example",
+        "helper.background"
+      ]
     }
   }
 }

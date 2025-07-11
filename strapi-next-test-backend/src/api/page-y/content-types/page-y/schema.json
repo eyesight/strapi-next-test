@@ -17,7 +17,8 @@
     "blocks": {
       "type": "dynamiczone",
       "components": [
-        "container.left-right-container"
+        "container.left-right-container",
+        "section.example"
       ]
     }
   }

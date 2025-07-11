@@ -19,7 +19,8 @@
       "type": "dynamiczone",
       "components": [
         "text-blocks.text-image",
-        "text-blocks.key-figure"
+        "text-blocks.key-figure",
+        "section.example"
       ]
     }
   }

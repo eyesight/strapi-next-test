@@ -441,7 +441,7 @@ export interface ApiPageXPageX extends Struct.CollectionTypeSchema {
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['text-blocks.text-image', 'text-blocks.key-figure']
+      ['text-blocks.text-image', 'text-blocks.key-figure', 'section.example']
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -471,7 +471,9 @@ export interface ApiPageYPageY extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<['container.left-right-container']>;
+    blocks: Schema.Attribute.DynamicZone<
+      ['container.left-right-container', 'section.example']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -501,6 +503,9 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    blocks: Schema.Attribute.DynamicZone<
+      ['section.example', 'helper.background']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -509,6 +514,9 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<['section.example']>;
+    Template: Schema.Attribute.Enumeration<['Typ X', 'Typ Y']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Typ X'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
