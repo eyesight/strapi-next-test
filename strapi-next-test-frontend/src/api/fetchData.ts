@@ -11,28 +11,32 @@ import {
   FetchHeaderDocument
 } from '@/graphql/generated'
 
-export const fetchPage = async (url: string) => {
+export const fetchPage = async (url: string, options?: { preview?: boolean }) => {
   try {
+    const publicationStatus = options?.preview
+    ? PublicationStatus.Draft
+    : PublicationStatus.Published;
+
     const result = await gqlClient.query<FetchPageQuery, FetchPageQueryVariables>({
       query: FetchPageDocument,
       variables: {
-        url: url,
-        status: PublicationStatus.Published
+        url,
+        status: publicationStatus,
       },
       fetchPolicy: 'network-only',
-    })
+    });
 
-    const page = result.data.pages?.[0]
+    const page = result.data.pages?.[0];
     if (!page) {
-      throw new Error('No page found.')
+      throw new Error('No page found.');
     }
 
-    return page
+    return page;
   } catch (error) {
-    console.log(JSON.stringify(error))
-    return null
+    console.error('fetchPage error:', JSON.stringify(error));
+    return null;
   }
-}
+};
 
 export const fetchFooter = async () => {
   try {
