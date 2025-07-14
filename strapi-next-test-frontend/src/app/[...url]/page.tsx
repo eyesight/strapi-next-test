@@ -8,25 +8,38 @@ import styles from './page.module.scss';
 import { draftMode } from 'next/headers'
 import { PublicationStatus } from '@/graphql/generated'
 
-export default async function Page() {
+interface PageProps {
+  params: {
+    url: string[]
+  }
+}
+
+export const revalidate: number = 60
+
+const Page = async ({ params }: PageProps) => {
+  const url = '/' + params.url.join('/')
+
   const { isEnabled } = draftMode();
 
   const [footer, page, header] = await Promise.all([
     fetchFooter(),
-    fetchPage('/', isEnabled ? PublicationStatus.Draft : PublicationStatus.Published),
+    fetchPage(`/${url}`, isEnabled ? PublicationStatus.Draft : PublicationStatus.Published),
     fetchHeader()
   ]);
 
+  console.log(url);
+  console.log(page);
+  
   if (!footer || !header || !page) {
     return (<p>There was an error loading the page.</p>);
   }
-
+  
   const templateClass = page.Template === 'Typ_Y'
     ? styles.typ_y
     : page.Template === 'Typ_X'
     ? styles.typ_x
     : '';
-
+  
   return (
     <BodyWrapper template={page.Template}>
       <Header header={header} />
@@ -38,3 +51,6 @@ export default async function Page() {
     </BodyWrapper>
   );
 }
+
+export default Page
+

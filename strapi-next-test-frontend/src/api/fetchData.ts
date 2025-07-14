@@ -11,13 +11,13 @@ import {
   FetchHeaderDocument
 } from '@/graphql/generated'
 
-export const fetchPage = async (url: string) => {
+export const fetchPage = async (url: string, status: PublicationStatus = PublicationStatus.Published) => {
   try {
     const result = await gqlClient.query<FetchPageQuery, FetchPageQueryVariables>({
       query: FetchPageDocument,
       variables: {
-        url: url,
-        status: PublicationStatus.Published
+        url,
+        status
       },
       fetchPolicy: 'network-only',
     })
