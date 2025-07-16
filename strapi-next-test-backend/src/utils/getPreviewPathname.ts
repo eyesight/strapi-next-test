@@ -11,9 +11,9 @@ interface GetPreviewPathnameOptions {
   
     switch (uid) {
       case 'api::article.article':
-        return `/articles/${document.slug}`;
+        return `/articles/${document.url}`;
       case 'api::page.page':
-        return `/${document.slug}`;
+        return `/${document.url}`;
       default:
         return null;
     }

@@ -17,18 +17,17 @@ interface PageProps {
 export const revalidate: number = 60
 
 const Page = async ({ params }: PageProps) => {
-  const url = '/' + params.url.join('/')
+  const url = params.url.join('/');
 
   const { isEnabled } = draftMode();
 
   const [footer, page, header] = await Promise.all([
     fetchFooter(),
-    fetchPage(`/${url}`, isEnabled ? PublicationStatus.Draft : PublicationStatus.Published),
+    fetchPage(`${url}`, isEnabled ? PublicationStatus.Draft : PublicationStatus.Published),
     fetchHeader()
   ]);
 
-  console.log(url);
-  console.log(page);
+  console.log('DRAFT MODE:', draftMode().isEnabled, 'STATUS:', PublicationStatus.Draft );
   
   if (!footer || !header || !page) {
     return (<p>There was an error loading the page.</p>);
@@ -44,8 +43,8 @@ const Page = async ({ params }: PageProps) => {
     <BodyWrapper template={page.Template}>
       <Header header={header} />
       <main className={templateClass}>
-        <p>Hallo from page</p>
-        <PageWrapper url={'/'} page={page} />
+        <p>Hallo from Subpage</p>
+        <PageWrapper page={page} />
       </main>
       <Footer footer={footer} />
     </BodyWrapper>

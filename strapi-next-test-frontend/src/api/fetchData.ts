@@ -41,7 +41,6 @@ export const fetchFooter = async () => {
       fetchPolicy: 'network-only',
     })
     if (!result.data.footer) {
-      console.log('footer',result) 
       throw new Error('Failed to fetch footer.')
     }
 
@@ -59,7 +58,6 @@ export const fetchHeader = async () => {
       fetchPolicy: 'network-only',
     })
     if (!result.data.header) {
-      console.log('header', result)
       throw new Error('Failed to fetch footer.')
     }
 

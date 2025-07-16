@@ -31,8 +31,8 @@ export default async function Page() {
     <BodyWrapper template={page.Template}>
       <Header header={header} />
       <main className={templateClass}>
-        <p>Hallo from page</p>
-        <PageWrapper url={'/'} page={page} />
+        <p>Hallo from Homepage</p>
+        <PageWrapper page={page} />
       </main>
       <Footer footer={footer} />
     </BodyWrapper>

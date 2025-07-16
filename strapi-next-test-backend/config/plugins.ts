@@ -12,7 +12,7 @@ export default () =>
               url: `${env("PREVIEW_URL", "strapi")}/api/preview`,
               query: { 
                 preview_secret: `${env("PREVIEW_SECRET", "strapi")}`,
-                slug: '{url}',
+                url: '{url}',
                 status: 'draft'
              },
             },
