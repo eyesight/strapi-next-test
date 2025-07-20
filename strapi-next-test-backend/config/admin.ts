@@ -28,10 +28,10 @@ export default ({ env }) => ({
 
         const urlSearchParams = new URLSearchParams({
           secret: env("PREVIEW_SECRET"),
-          ...(url && { url }),
           uid,
           status,
         });
+        urlSearchParams.set("url", url || "/");
 
         const previewURL = `${env("CLIENT_URL")}/api/preview?${urlSearchParams}`;
         return previewURL;

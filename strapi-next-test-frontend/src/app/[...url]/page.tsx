@@ -17,7 +17,7 @@ interface PageProps {
 export const revalidate: number = 60
 
 const Page = async ({ params }: PageProps) => {
-  const url = params.url.join('/');
+  const url = params?.url?.length ? `/${params.url.join("/")}` : "/";
 
   const { isEnabled: isDraftMode } = await draftMode();
   const status = isDraftMode ? PublicationStatus.Draft : PublicationStatus.Published;
@@ -54,4 +54,3 @@ const Page = async ({ params }: PageProps) => {
 }
 
 export default Page
-

@@ -8,27 +8,39 @@ import styles from './page.module.scss';
 import { draftMode } from 'next/headers'
 import { PublicationStatus } from '@/graphql/generated'
 
-export default async function Page() {
-  const { isEnabled } = draftMode();
+interface PageProps {
+  params: {
+    url: string[]
+  }
+}
+
+export const revalidate: number = 60
+
+const Page = async ({ params }: PageProps) => {
+  const url = "/";
+
+  const { isEnabled: isDraftMode } = await draftMode();
+  const status = isDraftMode ? PublicationStatus.Draft : PublicationStatus.Published;
 
   const [footer, page, header] = await Promise.all([
     fetchFooter(),
-    fetchPage('/', isEnabled ? PublicationStatus.Draft : PublicationStatus.Published),
+    fetchPage(`${url}`, status),
     fetchHeader()
   ]);
 
-  console.log('DRAFT MODE:', draftMode().isEnabled, 'STATUS:', PublicationStatus.Draft );
-
+  console.log('DRAFT MODE:', draftMode().isEnabled, 'STATUS:', status );
+  console.log("Page props:", { url, status, page });
+  
   if (!footer || !header || !page) {
     return (<p>There was an error loading the page.</p>);
   }
-
+  
   const templateClass = page.Template === 'Typ_Y'
     ? styles.typ_y
     : page.Template === 'Typ_X'
     ? styles.typ_x
     : '';
-
+  
   return (
     <BodyWrapper template={page.Template}>
       <Header header={header} />
@@ -40,3 +52,5 @@ export default async function Page() {
     </BodyWrapper>
   );
 }
+
+export default Page

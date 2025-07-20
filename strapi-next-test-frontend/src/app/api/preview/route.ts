@@ -10,7 +10,7 @@ function getPreviewPath(
   const basePath = (() => {
     if (!contentType) return "/";
     if (contentType === "page" || contentType.includes("pages")) {
-      return url ? `/${url}` : "/";
+      return url && url !== "/" ? `/${url}` : "/";
     }
     if (contentType === "article" || contentType.includes("articles")) {
       return url ? `/articles/${url}` : "/articles";
