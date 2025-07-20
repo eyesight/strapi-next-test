@@ -1,5 +1,5 @@
-query FetchPage($url: String!, $status: PublicationStatus) {
-  pages(status: $status, filters: { url: { eq: $url } }) {
-        ...Page
+query FetchPage($url: String!, $isPublished: Boolean!) {
+  pages(filters: { url: { eq: $url }, publishedAt: { null: $isPublished } }) {
+    ...Page
   }
 }

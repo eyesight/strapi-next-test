@@ -1,4 +1,4 @@
-import { fetchFooter, fetchPage, fetchHeader } from '@/api/fetchData';
+import { fetchFooter, fetchPage, fetchHeader } from '@/app/api/fetchData';
 import Footer from '@/layout/Footer/Footer';
 import Header from '@/layout/Header/header';
 import PageWrapper from '@/layout/PageWrapper';
@@ -16,6 +16,8 @@ export default async function Page() {
     fetchPage('/', isEnabled ? PublicationStatus.Draft : PublicationStatus.Published),
     fetchHeader()
   ]);
+
+  console.log('DRAFT MODE:', draftMode().isEnabled, 'STATUS:', PublicationStatus.Draft );
 
   if (!footer || !header || !page) {
     return (<p>There was an error loading the page.</p>);

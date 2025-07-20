@@ -13,7 +13,7 @@ interface GetPreviewPathnameOptions {
       case 'api::article.article':
         return `/articles/${document.url}`;
       case 'api::page.page':
-        return `/${document.url}`;
+        return `${document.url}`;
       default:
         return null;
     }

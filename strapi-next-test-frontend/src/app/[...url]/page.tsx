@@ -1,4 +1,4 @@
-import { fetchFooter, fetchPage, fetchHeader } from '@/api/fetchData';
+import { fetchFooter, fetchPage, fetchHeader } from '@/app/api/fetchData';
 import Footer from '@/layout/Footer/Footer';
 import Header from '@/layout/Header/header';
 import PageWrapper from '@/layout/PageWrapper';
@@ -19,15 +19,17 @@ export const revalidate: number = 60
 const Page = async ({ params }: PageProps) => {
   const url = params.url.join('/');
 
-  const { isEnabled } = draftMode();
+  const { isEnabled: isDraftMode } = await draftMode();
+  const status = isDraftMode ? PublicationStatus.Draft : PublicationStatus.Published;
 
   const [footer, page, header] = await Promise.all([
     fetchFooter(),
-    fetchPage(`${url}`, isEnabled ? PublicationStatus.Draft : PublicationStatus.Published),
+    fetchPage(`${url}`, status),
     fetchHeader()
   ]);
 
-  console.log('DRAFT MODE:', draftMode().isEnabled, 'STATUS:', PublicationStatus.Draft );
+  console.log('DRAFT MODE:', draftMode().isEnabled, 'STATUS:', status );
+  console.log("Page props:", { url, status, page });
   
   if (!footer || !header || !page) {
     return (<p>There was an error loading the page.</p>);

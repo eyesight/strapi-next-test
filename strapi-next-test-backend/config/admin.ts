@@ -16,11 +16,25 @@ export default ({ env }) => ({
   preview: {
     enabled: true,
     config: {
-      allowedOrigins: [env('CLIENT_URL')],
-      handler: async (uid, { documentId, locale, status }) => {
-        const doc = await strapi.entityService.findOne(uid, documentId);
-        const pathname = getPreviewPathname(uid, { locale, document: doc });
-        return `${env('CLIENT_URL')}${pathname}?preview_secret=${env('PREVIEW_SECRET')}&status=${status}`;
+      allowedOrigins: [env("CLIENT_URL"), "http://127.0.0.1:3000"],
+
+      async handler(uid, { documentId, locale, status }) {
+        const document = await strapi.documents(uid).findOne({
+          documentId,
+          populate: null,
+          fields: ["url"],
+        });
+        const { url } = document;
+
+        const urlSearchParams = new URLSearchParams({
+          secret: env("PREVIEW_SECRET"),
+          ...(url && { url }),
+          uid,
+          status,
+        });
+
+        const previewURL = `${env("CLIENT_URL")}/api/preview?${urlSearchParams}`;
+        return previewURL;
       },
     },
   },

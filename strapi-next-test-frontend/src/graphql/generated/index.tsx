@@ -1310,7 +1310,7 @@ export type FetchHeaderQuery = { __typename?: 'Query', header?: { __typename?: '
 
 export type FetchPageQueryVariables = Exact<{
   url: Scalars['String']['input'];
-  status?: InputMaybe<PublicationStatus>;
+  isPublished: Scalars['Boolean']['input'];
 }>;
 
 
@@ -1450,8 +1450,8 @@ export type FetchHeaderLazyQueryHookResult = ReturnType<typeof useFetchHeaderLaz
 export type FetchHeaderSuspenseQueryHookResult = ReturnType<typeof useFetchHeaderSuspenseQuery>;
 export type FetchHeaderQueryResult = Apollo.QueryResult<FetchHeaderQuery, FetchHeaderQueryVariables>;
 export const FetchPageDocument = gql`
-    query FetchPage($url: String!, $status: PublicationStatus) {
-  pages(status: $status, filters: {url: {eq: $url}}) {
+    query FetchPage($url: String!, $isPublished: Boolean!) {
+  pages(filters: {url: {eq: $url}, publishedAt: {null: $isPublished}}) {
     ...Page
   }
 }
@@ -1470,7 +1470,7 @@ export const FetchPageDocument = gql`
  * const { data, loading, error } = useFetchPageQuery({
  *   variables: {
  *      url: // value for 'url'
- *      status: // value for 'status'
+ *      isPublished: // value for 'isPublished'
  *   },
  * });
  */

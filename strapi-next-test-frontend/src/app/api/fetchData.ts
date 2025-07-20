@@ -1,4 +1,4 @@
-import { gqlClient } from '@/api/apollo'
+import { gqlClient } from '@/app/api/apollo'
 import {
   FetchFooterQuery,
   FetchFooterQueryVariables, FetchFooterDocument,
@@ -13,11 +13,13 @@ import {
 
 export const fetchPage = async (url: string, status: PublicationStatus = PublicationStatus.Published) => {
   try {
+    const isPublished = status === PublicationStatus.Published;
+
     const result = await gqlClient.query<FetchPageQuery, FetchPageQueryVariables>({
       query: FetchPageDocument,
       variables: {
         url,
-        status
+        isPublished
       },
       fetchPolicy: 'network-only',
     })
