@@ -14,12 +14,11 @@ interface PageProps {
   }
 }
 
-export const revalidate: number = 60
-
 const Page = async ({ params }: PageProps) => {
-  const url = params?.url?.length ? `/${params.url.join("/")}` : "/";
 
-  const { isEnabled: isDraftMode } = await draftMode();
+  const url = params?.url?.length ? `${params.url.join("/")}` : "/";
+
+  const { isEnabled: isDraftMode } = draftMode();
   const status = isDraftMode ? PublicationStatus.Draft : PublicationStatus.Published;
 
   const [footer, page, header] = await Promise.all([

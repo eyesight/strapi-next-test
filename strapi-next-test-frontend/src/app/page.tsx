@@ -14,8 +14,6 @@ interface PageProps {
   }
 }
 
-export const revalidate: number = 60
-
 const Page = async ({ params }: PageProps) => {
   const url = "/";
 

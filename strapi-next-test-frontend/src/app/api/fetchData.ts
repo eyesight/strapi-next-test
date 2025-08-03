@@ -2,39 +2,53 @@ import { gqlClient } from '@/app/api/apollo'
 import {
   FetchFooterQuery,
   FetchFooterQueryVariables, FetchFooterDocument,
-  FetchPageQuery,
-  FetchPageQueryVariables,
-  FetchPageDocument,
   PublicationStatus,
+  FetchPageLiveQuery,
   FetchHeaderQuery,
   FetchHeaderQueryVariables,
-  FetchHeaderDocument
+  FetchHeaderDocument,
+  FetchPageDraftQuery,
+  FetchPageLiveQueryVariables,
+  FetchPageDraftQueryVariables,
+  FetchPageDraftDocument,
+  FetchPageLiveDocument
 } from '@/graphql/generated'
 
-export const fetchPage = async (url: string, status: PublicationStatus = PublicationStatus.Published) => {
+export const fetchPage = async (
+  url: string,
+  status: PublicationStatus = PublicationStatus.Published
+) => {
   try {
-    const isPublished = status === PublicationStatus.Published;
+    console.log('---- fetch --- status:', status);
+    console.log('---- fetch --- url:', url);
 
-    const result = await gqlClient.query<FetchPageQuery, FetchPageQueryVariables>({
-      query: FetchPageDocument,
-      variables: {
-        url,
-        isPublished
-      },
+    const isDraft = status === PublicationStatus.Draft;
+
+    const result = await gqlClient.query<
+      FetchPageLiveQuery | FetchPageDraftQuery,
+      FetchPageLiveQueryVariables | FetchPageDraftQueryVariables
+    >({
+      query: isDraft ? FetchPageDraftDocument : FetchPageLiveDocument,
+      variables: { url },
       fetchPolicy: 'network-only',
-    })
+    });
 
-    const page = result.data.pages?.[0]
+    const pageData = (result.data as any).pages?.data?.[0];
+    const page = pageData?.attributes;
+
     if (!page) {
-      throw new Error('No page found.')
+      throw new Error('No page found.');
     }
 
-    return page
+    return {
+      id: pageData.id,
+      ...page,
+    };
   } catch (error) {
-    console.log(JSON.stringify(error))
-    return null
+    console.log('[fetchPage] Error:', JSON.stringify(error));
+    return null;
   }
-}
+};
 
 export const fetchFooter = async () => {
   try {

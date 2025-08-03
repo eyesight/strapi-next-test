@@ -1,5 +1,10 @@
-query FetchPage($url: String!, $isPublished: Boolean!) {
-  pages(filters: { url: { eq: $url }, publishedAt: { null: $isPublished } }) {
+query FetchPageLive($url: String!) {
+  pages(
+    filters: {
+      url: { eq: $url }
+      publishedAt: { ne: null }
+    }
+  ) {
     ...Page
   }
 }

@@ -1,5 +1,6 @@
-import { draftMode } from "next/headers";
-import { NextResponse } from "next/server";
+// app/api/preview/route.ts
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 function getPreviewPath(
   contentType: string | undefined,
@@ -34,19 +35,20 @@ export const GET = async (request: Request) => {
 
   const contentType = uid?.split(".").pop();
   const basePath = getPreviewPath(contentType, url, locale, null); // get path without status query
-
-  // Build full URL with status query param properly
   const origin = request.headers.get("origin") || `http://${request.headers.get("host")}`;
   const redirectURL = new URL(basePath, origin);
   if (status) redirectURL.searchParams.set("status", status);
 
-  const draft = draftMode();
+  const response = NextResponse.redirect(redirectURL);
+
+  // 👇 Manually set preview cookies
   if (status === "draft") {
-    await draft.enable();
+    response.cookies.set('__prerender_bypass', 'true');
+    response.cookies.set('__next_preview_data', 'enabled');
   } else {
-    await draft.disable();
+    response.cookies.set('__prerender_bypass', '', { maxAge: 0 });
+    response.cookies.set('__next_preview_data', '', { maxAge: 0 });
   }
 
-  return NextResponse.redirect(redirectURL);
+  return response;
 };
-
