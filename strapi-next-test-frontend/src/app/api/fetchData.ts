@@ -19,8 +19,7 @@ export const fetchPage = async (
   status: PublicationStatus = PublicationStatus.Published
 ) => {
   try {
-    console.log('---- fetch --- status:', status);
-    console.log('---- fetch --- url:', url);
+    console.log('[fetchPage] Status:', status, 'URL:', url);
 
     const isDraft = status === PublicationStatus.Draft;
 
@@ -33,11 +32,21 @@ export const fetchPage = async (
       fetchPolicy: 'network-only',
     });
 
-    const pageData = (result.data as any).pages?.data?.[0];
-    const page = pageData?.attributes;
+    console.log('[fetchPage] Raw result:', result.data);
+
+    const pages = (result.data as any).pages;
+    let pageData;
+
+    if (Array.isArray(pages?.data)) {
+      pageData = pages.data[0];
+    } else if (Array.isArray(pages)) {
+      pageData = pages[0];
+    }
+
+    const page = pageData?.attributes || pageData;
 
     if (!page) {
-      throw new Error('No page found.');
+      throw new Error('No page found for URL: ' + url);
     }
 
     return {
@@ -45,7 +54,7 @@ export const fetchPage = async (
       ...page,
     };
   } catch (error) {
-    console.log('[fetchPage] Error:', JSON.stringify(error));
+    console.error('[fetchPage] Error fetching page:', error);
     return null;
   }
 };

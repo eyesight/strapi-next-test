@@ -5,50 +5,53 @@ import PageWrapper from '@/layout/PageWrapper';
 import BodyWrapper from '@/_components/BodyWrapper';
 import React from 'react';
 import styles from './page.module.scss'; 
-import { draftMode } from 'next/headers'
-import { PublicationStatus } from '@/graphql/generated'
+import { draftMode } from 'next/headers';
+import { PublicationStatus } from '@/graphql/generated';
 
 interface PageProps {
   params: {
-    url: string[]
-  }
+    url?: string[];
+  };
 }
 
 const Page = async ({ params }: PageProps) => {
-  const url = "/";
+  const url = `/`;
 
   const { isEnabled: isDraftMode } = await draftMode();
   const status = isDraftMode ? PublicationStatus.Draft : PublicationStatus.Published;
 
+  console.log('DRAFT MODE:', isDraftMode, 'STATUS:', status, 'URL:', url);
+
   const [footer, page, header] = await Promise.all([
     fetchFooter(),
-    fetchPage(`${url}`, status),
+    fetchPage(url, status),
     fetchHeader()
   ]);
 
-  console.log('DRAFT MODE:', draftMode().isEnabled, 'STATUS:', status );
-  console.log("Page props:", { url, status, page });
-  
+  console.log("Page data fetched:", { url, status, page });
+
   if (!footer || !header || !page) {
     return (<p>There was an error loading the page.</p>);
   }
-  
-  const templateClass = page.Template === 'Typ_Y'
-    ? styles.typ_y
-    : page.Template === 'Typ_X'
-    ? styles.typ_x
-    : '';
-  
+
+  const templateName = (page.Template || '').toLowerCase();
+  const templateClass =
+    templateName === 'typ_y'
+      ? styles.typ_y
+      : templateName === 'typ_x'
+      ? styles.typ_x
+      : '';
+
   return (
     <BodyWrapper template={page.Template}>
       <Header header={header} />
       <main className={templateClass}>
-        <p>Hallo from Homepage</p>
+        <p>Hallo from {page.title || 'Homepage'}</p>
         <PageWrapper page={page} />
       </main>
       <Footer footer={footer} />
     </BodyWrapper>
   );
-}
+};
 
-export default Page
+export default Page;
