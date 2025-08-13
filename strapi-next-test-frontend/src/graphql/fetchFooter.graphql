@@ -1,5 +1,5 @@
-query FetchFooter {
-  footer {
+query FetchFooter($status: PublicationStatus) {
+  footer(status: $status) {
     ...Footer
   }
 }

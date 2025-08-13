@@ -28,8 +28,7 @@
         }
       },
       "components": [
-        "section.example",
-        "text-blocks.text-image"
+        "section.example"
       ]
     },
     "url": {

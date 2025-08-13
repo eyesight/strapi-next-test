@@ -1,0 +1,10 @@
+query FetchPageDraft($url: String!) {
+  pages(
+    filters: {
+      url: { eq: $url }
+      # no publishedAt filter → includes drafts
+    }
+  ) {
+    ...Page
+  }
+}

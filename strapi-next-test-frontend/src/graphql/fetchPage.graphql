@@ -1,5 +1,10 @@
-query FetchPage($url: String!, $status: PublicationStatus) {
-  pages(status: $status, filters: { url: { eq: $url } }) {
-        ...Page
+query FetchPageLive($url: String!, $status: PublicationStatus) {
+  pages(
+    status: $status
+    filters: {
+      url: { eq: $url }
+    }
+  ) {
+    ...Page
   }
 }

@@ -1,4 +1,4 @@
-import AxiosHttpClient from '@/api/axios'
+import AxiosHttpClient from '@/app/api/axios'
 
 export const postSubscriber = async (email: string) => {
   try {

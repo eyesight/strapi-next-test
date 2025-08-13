@@ -1,7 +1,6 @@
-export default () => (
-    { env }) => ({
-        'entity-notes': {
-            enabled: true,
-        },
+export default () =>
+  ({ env }) => ({
+    "entity-notes": {
+      enabled: true,
     }
-);
+  });
