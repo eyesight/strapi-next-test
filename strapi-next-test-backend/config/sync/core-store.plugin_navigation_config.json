@@ -12,7 +12,8 @@
       }
     ],
     "contentTypes": [
-      "api::page.page"
+      "api::page.page",
+      "plugin::upload.file"
     ],
     "contentTypesNameFields": {
       "default": [
@@ -22,24 +23,28 @@
       ],
       "api::page.page": [
         "title"
-      ]
+      ],
+      "plugin::upload.file": []
     },
     "contentTypesPopulate": {
       "api::page.page": [
         "blocks"
-      ]
+      ],
+      "plugin::upload.file": []
     },
     "defaultContentType": "api::page.page",
-    "allowedLevels": 2,
+    "allowedLevels": 3,
     "gql": {
       "navigationItemRelated": [
-        "Page"
+        "Page",
+        "UploadFile"
       ]
     },
     "pathDefaultFields": {
       "api::page.page": [
         "url"
-      ]
+      ],
+      "plugin::upload.file": []
     },
     "cascadeMenuAttached": true,
     "preferCustomContentTypes": false,
