@@ -1,0 +1,167 @@
+{
+  "key": "plugin_content_manager_configuration_components::container.left-right-container",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "documentId",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "leftColumnBg": {
+        "edit": {
+          "label": "leftColumnBg",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "leftColumnBg",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "leftColumnKeyfigure": {
+        "edit": {
+          "label": "leftColumnKeyfigure",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "leftColumnKeyfigure",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "leftColumnText": {
+        "edit": {
+          "label": "leftColumnText",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "leftColumnText",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "rightColumnBg": {
+        "edit": {
+          "label": "rightColumnBg",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "rightColumnBg",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "rightColumnKeyfigure": {
+        "edit": {
+          "label": "rightColumnKeyfigure",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "rightColumnKeyfigure",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "rightColumnText": {
+        "edit": {
+          "label": "rightColumnText",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "rightColumnText",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "documentId": {
+        "edit": {},
+        "list": {
+          "label": "documentId",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "leftColumnBg",
+        "leftColumnKeyfigure",
+        "leftColumnText"
+      ],
+      "edit": [
+        [
+          {
+            "name": "leftColumnBg",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "leftColumnKeyfigure",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "leftColumnText",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "rightColumnBg",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "rightColumnKeyfigure",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "rightColumnText",
+            "size": 12
+          }
+        ]
+      ]
+    },
+    "uid": "container.left-right-container",
+    "isComponent": true
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

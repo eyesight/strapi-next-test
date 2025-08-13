@@ -1,0 +1,79 @@
+{
+  "name": "Public",
+  "description": "Default role given to unauthenticated user.",
+  "type": "public",
+  "documentId": "pm5ocq9gpzr3cwmegt4t8nga",
+  "locale": null,
+  "permissions": [
+    {
+      "action": "api::footer.footer.find",
+      "documentId": "zkru4vjkji4l88l1j2enic0p",
+      "locale": null
+    },
+    {
+      "action": "api::header.header.find",
+      "documentId": "phy6tux7fbqa3rfe29wykq0r",
+      "locale": null
+    },
+    {
+      "action": "api::page.page.find",
+      "documentId": "pmbchrykb9p9q9drh4zuuvho",
+      "locale": null
+    },
+    {
+      "action": "api::page.page.findOne",
+      "documentId": "h089s2tqex02enj3907a9ncs",
+      "locale": null
+    },
+    {
+      "action": "plugin::navigation.client.readAll",
+      "documentId": "h7yj93isuan8qk78barhvhxs",
+      "locale": null
+    },
+    {
+      "action": "plugin::navigation.client.render",
+      "documentId": "ru0we6ute5kckoxtle3p2k98",
+      "locale": null
+    },
+    {
+      "action": "plugin::navigation.client.renderChild",
+      "documentId": "wmx1kdlc2um6iwt4vr4rn65z",
+      "locale": null
+    },
+    {
+      "action": "plugin::users-permissions.auth.callback",
+      "documentId": "cpmjrjhhz6gfz5o35cjsuse9",
+      "locale": null
+    },
+    {
+      "action": "plugin::users-permissions.auth.connect",
+      "documentId": "daml3dmef05qqhyvhtv9lo82",
+      "locale": null
+    },
+    {
+      "action": "plugin::users-permissions.auth.emailConfirmation",
+      "documentId": "hxr313ru43yimowfs7k92wvs",
+      "locale": null
+    },
+    {
+      "action": "plugin::users-permissions.auth.forgotPassword",
+      "documentId": "asopiyrd8gcovahzg98ocxfm",
+      "locale": null
+    },
+    {
+      "action": "plugin::users-permissions.auth.register",
+      "documentId": "sk4fauc11u2alz2orb092asi",
+      "locale": null
+    },
+    {
+      "action": "plugin::users-permissions.auth.resetPassword",
+      "documentId": "f29flskq6uahi74xjzo7w6t7",
+      "locale": null
+    },
+    {
+      "action": "plugin::users-permissions.auth.sendEmailConfirmation",
+      "documentId": "fez0ic41iafzoq9d8orff7wi",
+      "locale": null
+    }
+  ]
+}
