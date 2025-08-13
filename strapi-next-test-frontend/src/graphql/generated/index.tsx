@@ -1298,18 +1298,23 @@ export type HeaderFragment = { __typename?: 'Header', headerText?: string | null
 
 export type PageFragment = { __typename?: 'Page', documentId: string, title?: string | null, url: string, Template: Enum_Page_Template, blocks?: Array<{ __typename: 'ComponentHelperBackground', id: string, color: Enum_Componenthelperbackground_Color } | { __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null, sections?: Array<{ __typename: 'ComponentSectionExample', id: string, test?: string | null } | { __typename: 'Error', code: string, message?: string | null } | null> | null };
 
-export type FetchFooterQueryVariables = Exact<{ [key: string]: never; }>;
+export type FetchFooterQueryVariables = Exact<{
+  status?: InputMaybe<PublicationStatus>;
+}>;
 
 
 export type FetchFooterQuery = { __typename?: 'Query', footer?: { __typename?: 'Footer', footerText?: string | null, createdAt?: any | null, updatedAt?: any | null, publishedAt?: any | null } | null };
 
-export type FetchHeaderQueryVariables = Exact<{ [key: string]: never; }>;
+export type FetchHeaderQueryVariables = Exact<{
+  status?: InputMaybe<PublicationStatus>;
+}>;
 
 
 export type FetchHeaderQuery = { __typename?: 'Query', header?: { __typename?: 'Header', headerText?: string | null, createdAt?: any | null, updatedAt?: any | null, publishedAt?: any | null } | null };
 
 export type FetchPageLiveQueryVariables = Exact<{
   url: Scalars['String']['input'];
+  status?: InputMaybe<PublicationStatus>;
 }>;
 
 
@@ -1378,8 +1383,8 @@ export const PageFragmentDoc = gql`
 }
     ${ComponentSectionExampleFragmentDoc}`;
 export const FetchFooterDocument = gql`
-    query FetchFooter {
-  footer {
+    query FetchFooter($status: PublicationStatus) {
+  footer(status: $status) {
     ...Footer
   }
 }
@@ -1397,6 +1402,7 @@ export const FetchFooterDocument = gql`
  * @example
  * const { data, loading, error } = useFetchFooterQuery({
  *   variables: {
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -1408,8 +1414,8 @@ export function useFetchFooterLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<FetchFooterQuery, FetchFooterQueryVariables>(FetchFooterDocument, options);
         }
-export function useFetchFooterSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FetchFooterQuery, FetchFooterQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useFetchFooterSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchFooterQuery, FetchFooterQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<FetchFooterQuery, FetchFooterQueryVariables>(FetchFooterDocument, options);
         }
 export type FetchFooterQueryHookResult = ReturnType<typeof useFetchFooterQuery>;
@@ -1417,8 +1423,8 @@ export type FetchFooterLazyQueryHookResult = ReturnType<typeof useFetchFooterLaz
 export type FetchFooterSuspenseQueryHookResult = ReturnType<typeof useFetchFooterSuspenseQuery>;
 export type FetchFooterQueryResult = Apollo.QueryResult<FetchFooterQuery, FetchFooterQueryVariables>;
 export const FetchHeaderDocument = gql`
-    query FetchHeader {
-  header {
+    query FetchHeader($status: PublicationStatus) {
+  header(status: $status) {
     ...Header
   }
 }
@@ -1436,6 +1442,7 @@ export const FetchHeaderDocument = gql`
  * @example
  * const { data, loading, error } = useFetchHeaderQuery({
  *   variables: {
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -1447,8 +1454,8 @@ export function useFetchHeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<FetchHeaderQuery, FetchHeaderQueryVariables>(FetchHeaderDocument, options);
         }
-export function useFetchHeaderSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FetchHeaderQuery, FetchHeaderQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useFetchHeaderSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchHeaderQuery, FetchHeaderQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<FetchHeaderQuery, FetchHeaderQueryVariables>(FetchHeaderDocument, options);
         }
 export type FetchHeaderQueryHookResult = ReturnType<typeof useFetchHeaderQuery>;
@@ -1456,8 +1463,8 @@ export type FetchHeaderLazyQueryHookResult = ReturnType<typeof useFetchHeaderLaz
 export type FetchHeaderSuspenseQueryHookResult = ReturnType<typeof useFetchHeaderSuspenseQuery>;
 export type FetchHeaderQueryResult = Apollo.QueryResult<FetchHeaderQuery, FetchHeaderQueryVariables>;
 export const FetchPageLiveDocument = gql`
-    query FetchPageLive($url: String!) {
-  pages(filters: {url: {eq: $url}, publishedAt: {ne: null}}) {
+    query FetchPageLive($url: String!, $status: PublicationStatus) {
+  pages(status: $status, filters: {url: {eq: $url}}) {
     ...Page
   }
 }
@@ -1476,6 +1483,7 @@ export const FetchPageLiveDocument = gql`
  * const { data, loading, error } = useFetchPageLiveQuery({
  *   variables: {
  *      url: // value for 'url'
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -1487,8 +1495,8 @@ export function useFetchPageLiveLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<FetchPageLiveQuery, FetchPageLiveQueryVariables>(FetchPageLiveDocument, options);
         }
-export function useFetchPageLiveSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FetchPageLiveQuery, FetchPageLiveQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useFetchPageLiveSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchPageLiveQuery, FetchPageLiveQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<FetchPageLiveQuery, FetchPageLiveQueryVariables>(FetchPageLiveDocument, options);
         }
 export type FetchPageLiveQueryHookResult = ReturnType<typeof useFetchPageLiveQuery>;
@@ -1527,8 +1535,8 @@ export function useFetchPageDraftLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<FetchPageDraftQuery, FetchPageDraftQueryVariables>(FetchPageDraftDocument, options);
         }
-export function useFetchPageDraftSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FetchPageDraftQuery, FetchPageDraftQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useFetchPageDraftSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchPageDraftQuery, FetchPageDraftQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<FetchPageDraftQuery, FetchPageDraftQueryVariables>(FetchPageDraftDocument, options);
         }
 export type FetchPageDraftQueryHookResult = ReturnType<typeof useFetchPageDraftQuery>;

@@ -1,6 +1,5 @@
-// app/api/preview/route.ts
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { draftMode } from "next/headers";
+import { redirect } from "next/navigation";
 
 function getPreviewPath(
   contentType: string | undefined,
@@ -34,21 +33,12 @@ export const GET = async (request: Request) => {
   }
 
   const contentType = uid?.split(".").pop();
-  const basePath = getPreviewPath(contentType, url, locale, null); // get path without status query
-  const origin = request.headers.get("origin") || `http://${request.headers.get("host")}`;
-  const redirectURL = new URL(basePath, origin);
-  if (status) redirectURL.searchParams.set("status", status);
+  const finalPath = getPreviewPath(contentType, url, locale, status); 
+  
+  // Enable Draft Mode by setting the cookie
+	const draft = await draftMode();
+	status === "draft" ? draft.enable() : draft.disable();
 
-  const response = NextResponse.redirect(redirectURL);
-
-  // 👇 Manually set preview cookies
-  if (status === "draft") {
-    response.cookies.set('__prerender_bypass', 'true');
-    response.cookies.set('__next_preview_data', 'enabled');
-  } else {
-    response.cookies.set('__prerender_bypass', '', { maxAge: 0 });
-    response.cookies.set('__next_preview_data', '', { maxAge: 0 });
-  }
-
-  return response;
+	// Redirect to the path from the fetched post
+	redirect(finalPath);
 };

@@ -7,52 +7,31 @@ import {
   FetchHeaderQuery,
   FetchHeaderQueryVariables,
   FetchHeaderDocument,
-  FetchPageDraftQuery,
   FetchPageLiveQueryVariables,
-  FetchPageDraftQueryVariables,
-  FetchPageDraftDocument,
   FetchPageLiveDocument
-} from '@/graphql/generated'
+} from '@/graphql/generated';
+import { draftMode } from 'next/headers';
 
 export const fetchPage = async (
   url: string,
   status: PublicationStatus = PublicationStatus.Published
 ) => {
   try {
-    console.log('[fetchPage] Status:', status, 'URL:', url);
+    const draft = await draftMode();
 
-    const isDraft = status === PublicationStatus.Draft;
-
-    const result = await gqlClient.query<
-      FetchPageLiveQuery | FetchPageDraftQuery,
-      FetchPageLiveQueryVariables | FetchPageDraftQueryVariables
-    >({
-      query: isDraft ? FetchPageDraftDocument : FetchPageLiveDocument,
-      variables: { url },
-      fetchPolicy: 'network-only',
-    });
-
-    console.log('[fetchPage] Raw result:', result.data);
-
-    const pages = (result.data as any).pages;
-    let pageData;
-
-    if (Array.isArray(pages?.data)) {
-      pageData = pages.data[0];
-    } else if (Array.isArray(pages)) {
-      pageData = pages[0];
-    }
-
-    const page = pageData?.attributes || pageData;
-
-    if (!page) {
-      throw new Error('No page found for URL: ' + url);
-    }
-
-    return {
-      id: pageData.id,
-      ...page,
-    };
+    if (draft.isEnabled) draft.enable()
+      const result = await gqlClient.query<FetchPageLiveQuery, FetchPageLiveQueryVariables>({
+        query: FetchPageLiveDocument,
+        variables: { url, status: (draft.isEnabled ? 'DRAFT' : 'PUBLISHED') as PublicationStatus },
+        errorPolicy: 'all',
+        fetchPolicy: 'network-only',
+      });
+  
+      if (result.error) {
+        console.log(result.error);
+      }
+  
+      return result.data.pages?.[0] ?? null;
   } catch (error) {
     console.error('[fetchPage] Error fetching page:', error);
     return null;
@@ -61,8 +40,11 @@ export const fetchPage = async (
 
 export const fetchFooter = async () => {
   try {
+    const draft = await draftMode();
+    if (draft.isEnabled) draft.enable();
     const result = await gqlClient.query<FetchFooterQuery, FetchFooterQueryVariables>({
       query: FetchFooterDocument,
+      variables: { status: (draft.isEnabled ? 'DRAFT' : 'PUBLISHED') as PublicationStatus },
       fetchPolicy: 'network-only',
     })
     if (!result.data.footer) {
@@ -78,8 +60,11 @@ export const fetchFooter = async () => {
 
 export const fetchHeader = async () => {
   try {
+    const draft = await draftMode();
+    if (draft.isEnabled) draft.enable();
     const result = await gqlClient.query<FetchHeaderQuery, FetchHeaderQueryVariables>({
       query: FetchHeaderDocument,
+      variables: { status: (draft.isEnabled ? 'DRAFT' : 'PUBLISHED') as PublicationStatus },
       fetchPolicy: 'network-only',
     })
     if (!result.data.header) {

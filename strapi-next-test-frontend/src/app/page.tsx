@@ -20,15 +20,13 @@ const Page = async ({ params }: PageProps) => {
   const { isEnabled: isDraftMode } = await draftMode();
   const status = isDraftMode ? PublicationStatus.Draft : PublicationStatus.Published;
 
-  console.log('DRAFT MODE:', isDraftMode, 'STATUS:', status, 'URL:', url);
+  console.log('HOME');
 
   const [footer, page, header] = await Promise.all([
     fetchFooter(),
     fetchPage(url, status),
     fetchHeader()
   ]);
-
-  console.log("Page data fetched:", { url, status, page });
 
   if (!footer || !header || !page) {
     return (<p>There was an error loading the page.</p>);
@@ -46,7 +44,7 @@ const Page = async ({ params }: PageProps) => {
     <BodyWrapper template={page.Template}>
       <Header header={header} />
       <main className={templateClass}>
-        <p>Hallo from {page.title || 'Homepage'}</p>
+        <p>Hallo from {'Homepage'}</p>
         <PageWrapper page={page} />
       </main>
       <Footer footer={footer} />

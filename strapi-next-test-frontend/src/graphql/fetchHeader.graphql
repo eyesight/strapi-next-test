@@ -1,5 +1,5 @@
-query FetchHeader {
-  header {
+query FetchHeader($status: PublicationStatus) {
+  header(status: $status) {
     ...Header
   }
 }

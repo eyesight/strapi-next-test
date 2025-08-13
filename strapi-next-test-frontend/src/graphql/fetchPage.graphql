@@ -1,8 +1,8 @@
-query FetchPageLive($url: String!) {
+query FetchPageLive($url: String!, $status: PublicationStatus) {
   pages(
+    status: $status
     filters: {
       url: { eq: $url }
-      publishedAt: { ne: null }
     }
   ) {
     ...Page
