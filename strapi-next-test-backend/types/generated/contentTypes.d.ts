@@ -429,37 +429,6 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiPageXPageX extends Struct.CollectionTypeSchema {
-  collectionName: 'page_xes';
-  info: {
-    displayName: '_page-x';
-    pluralName: 'page-xes';
-    singularName: 'page-x';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    blocks: Schema.Attribute.DynamicZone<
-      ['text-blocks.text-image', 'text-blocks.key-figure', 'section.example']
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    Header: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::page-x.page-x'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiPageYPageY extends Struct.CollectionTypeSchema {
   collectionName: 'page_ies';
   info: {
@@ -1191,7 +1160,6 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::footer.footer': ApiFooterFooter;
       'api::header.header': ApiHeaderHeader;
-      'api::page-x.page-x': ApiPageXPageX;
       'api::page-y.page-y': ApiPageYPageY;
       'api::page.page': ApiPagePage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
